@@ -69,10 +69,12 @@ static update(task: Task): Task {
 
   /**
    * Gets all tasks from the data store
+   * @param page Page number
+   * @param pageSize Page size
    * @returns List of tasks
    */
-  static getAll(): Task[] {
-    return DataProvider.getInstance().getAll(Model.TASK);
+  static getAll(page: number = 1, pageSize: number = 10): Task[] {
+    return DataProvider.getInstance().getAll(Model.TASK, page, pageSize);
   }
 
 }

@@ -40,7 +40,9 @@ export default class TaskController extends Controller {
 
   public getTasks(req: Request, res: Response, next: NextFunction){
     try {
-      res.locals.data = TaskManagerService.getAll();
+      const page = Number(req.query.page) || 1;
+      const pageSize = Number(req.query.pageSize) || 10;
+      res.locals.data = TaskManagerService.getAll(page, pageSize);
       super.send(res);
     } catch (error) {
       next(error);

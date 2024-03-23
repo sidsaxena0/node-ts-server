@@ -45,11 +45,16 @@ export class DataProvider {
   /**
    * Returns all records of a model
    * @param model Name of the model
+   * @param page Page number
+   * @param pageSize Page size
+   * @returns List of records
    */
-  public getAll(model: string){
+  public getAll(model: string, page: number, pageSize: number): any {
     switch (model) {
       case Model.TASK:
-        return this.tasks;
+        const start = (page - 1) * pageSize;
+        const end = page * pageSize;
+        return this.tasks.slice(start, end);
       default:
         throw new Error(`Model ${model} not supported`);
     }
