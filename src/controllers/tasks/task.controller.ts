@@ -42,7 +42,8 @@ export default class TaskController extends Controller {
     try {
       const page = Number(req.query.page) || 1;
       const pageSize = Number(req.query.pageSize) || 10;
-      res.locals.data = TaskManagerService.getAll(page, pageSize);
+      const filter = req.query;
+      res.locals.data = TaskManagerService.getAll(page, pageSize, filter);
       super.send(res);
     } catch (error) {
       next(error);
@@ -69,7 +70,7 @@ export default class TaskController extends Controller {
       } else {
         body.dueDate = new Date(body.dueDate);
       }
-      res.locals.data = TaskManagerService.update(body);
+      res.locals.data = TaskManagerService.update(body, +req.params.id);
       super.send(res);
     } catch (error) {
       next(error);

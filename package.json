@@ -2,10 +2,11 @@
   "name": "task-management-api",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx ts-node src/server.ts"
+    "start": "tsc && node dist/src/server.js",
+    "test": "tsc && mocha dist/test/**/*.spec.js",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "",
@@ -17,10 +18,17 @@
     "http-status-codes": "^2.3.0"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.14",
     "@types/cors": "^2.8.17",
     "@types/express": "^4.17.21",
-    "@types/express-requests-logger": "^3.0.4",
+    "@types/mocha": "^10.0.6",
     "@types/node": "^20.11.30",
+    "@types/supertest": "^6.0.2",
+    "chai": "^4.2.0",
+    "chai-http": "^4.4.0",
+    "esm": "^3.2.25",
+    "mocha": "^10.3.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.4.3"
   }
 }

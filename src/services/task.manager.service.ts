@@ -42,11 +42,12 @@ export class TaskManagerService {
   /**
    * Updates a task in the data store
    * @param task Task data
+   * @param id Task ID
    * @returns Updated task
    */
-static update(task: Task): Task {
+static update(task: Task, id: number): Task {
     TaskManagerService.validateTask(task);
-    return DataProvider.getInstance().update(Model.TASK, task);
+    return DataProvider.getInstance().update(Model.TASK, task, id);
   }
 
   /**
@@ -71,10 +72,11 @@ static update(task: Task): Task {
    * Gets all tasks from the data store
    * @param page Page number
    * @param pageSize Page size
+   * @param filter Filter object
    * @returns List of tasks
    */
-  static getAll(page: number = 1, pageSize: number = 10): Task[] {
-    return DataProvider.getInstance().getAll(Model.TASK, page, pageSize);
+  static getAll(page: number = 1, pageSize: number = 10, filter: any = {}): Task[] {
+    return DataProvider.getInstance().getAll(Model.TASK, page, pageSize, filter);
   }
 
 }
