@@ -47,28 +47,39 @@ export class DataProvider {
    * @param model Name of the model
    * @param page Page number
    * @param pageSize Page size
+   * @param filter Filter object
    * @returns List of records
    */
-  public getAll(model: string, page: number, pageSize: number): any {
+  public getAll(model: string, page: number, pageSize: number, filter: any = {}): any {
     switch (model) {
       case Model.TASK:
+        delete filter.page;
+        delete filter.pageSize;
         const start = (page - 1) * pageSize;
         const end = page * pageSize;
-        return this.tasks.slice(start, end);
+        let tasks = this.tasks;
+        // Apply each filter condition
+        for (const key in filter) {
+          // @ts-ignore
+          tasks = tasks.filter(task => task[key] === filter[key]);
+        }
+        tasks = tasks.slice(start, end);
+        return tasks;
       default:
         throw new Error(`Model ${model} not supported`);
     }
   }
-
   /**
    * Updates a record in the data store
    * @param model Name of the model
    * @param data Data to update
+   * @param id ID of the record to update
    */
-  public update(model: string, data: any): any {
+  public update(model: string, data: any, id: number): any {
+    console.log('update req', model, data, id)
     switch (model) {
       case Model.TASK:
-        const task = this.tasks.find((task: any) => task.id === data.id);
+        const task = this.tasks.find((task: any) => task.id === id);
         if (!task) {
           throw new Error(`Task with id ${data.id} not found`);
         }
